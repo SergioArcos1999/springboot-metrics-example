@@ -1,0 +1,27 @@
+apiVersion: core.oam.dev/v1alpha2
+kind: ApplicationConfiguration
+metadata:
+  name: springboot-metrics-appconf
+  annotations:
+    version: v1.0.0
+    description: "Spring Boot metrics application"
+spec:
+  components:
+    - componentName: springboot-metrics-component
+      traits:
+        - trait:
+            apiVersion: oam.verrazzano.io/v1alpha1
+            kind: MetricsTrait
+            spec:
+              scraper: verrazzano-system/vmi-system-prometheus-0
+              path: "/actuator/prometheus"
+        - trait:
+            apiVersion: oam.verrazzano.io/v1alpha1
+            kind: IngressTrait
+            metadata:
+              name: springboot-metrics-ingress
+            spec:
+              rules:
+                - paths:
+                    - path: "/"
+                      pathType: Prefix

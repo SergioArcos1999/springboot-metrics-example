@@ -1,0 +1,21 @@
+apiVersion: core.oam.dev/v1alpha2
+kind: Component
+metadata:
+  name: springboot-metrics-component
+spec:
+  workload:
+    apiVersion: core.oam.dev/v1alpha2
+    kind: ContainerizedWorkload
+    metadata:
+      name: springboot-metrics-workload
+      labels:
+        app: springboot-metrics
+        version: v1
+    spec:
+      containers:
+        - name: springboot-metrics-container
+          image: sarcos1999/springboot-metrics:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+              name: metrics
